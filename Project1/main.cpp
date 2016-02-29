@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <time.h>
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -7,7 +9,7 @@ int partition(vector<T> & vec, int p, int r) {
  	T pivot = vec[r];
 	int i = p-1;
 	for (int j = p; j <= r; j++) {
-		if (vec[j] <= pivot) {
+		if (vec[j] < pivot) {
 			i++;
 			T temp = vec[i];
 			vec[i] = vec[j];
@@ -15,6 +17,17 @@ int partition(vector<T> & vec, int p, int r) {
 		}
 	}
 	return i;
+}
+
+template <class T>
+int rand_partition(vector<T> & vec, int p, int r) {
+	srand(time(NULL));
+	
+	int num = rand() % (r-p);
+	T tmp = vec[r];
+	vec[r] = vec[num];
+	vec[num] = tmp;
+	return partition(vec, p, r);
 }
 
 template <class T>
@@ -27,11 +40,20 @@ void quicksort(vector<T> & vec, int p, int r) {
 }
 
 template <class T>
+void rand_quicksort(vector<T> & vec, int p, int r) {
+	if (p < r) {
+		int q = rand_partition(vec, p, r);
+		rand_quicksort(vec, p, q-1);
+		rand_quicksort(vec, q+1, r);
+	}
+}
+
+template <class T>
 void insertionsort(vector<T> & vec) {
 	for(int i = 0; i < vec.size(); i++) {
 		T tmp = vec[i];
 		int j = i-1;
-		while(i >= 1 && vec[j] > tmp) {
+		while(i >= 1 && tmp < vec[j]) {
 			vec[j+1] = vec[j];
 			j--;
 		}
