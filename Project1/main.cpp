@@ -2,6 +2,8 @@
 #include <time.h>
 #include <iostream>
 #include <vector>
+#include <chrono>
+#include <thread>
 #include "integer.h"
 using namespace std;
 
@@ -81,11 +83,19 @@ int main() {
 		cout << i.get_value() << ' ';
 	cout << "\n\n";
 
-	v = create_random(100);
-	rand_quicksort(v, 0, v.size()-1);
-	for(Integer i : v)
-		cout << i.get_value() << ' ';
-	cout << "\n\n";
+	srand(time(NULL));
+	
+	int num_rand = 4;
+	for (int i = 0; i < num_rand; i++) {
+		v = create_random(100);
+		rand_quicksort(v, 0, v.size()-1);
+		for(Integer i : v)
+			cout << i.get_value() << ' ';
+		cout << "\n\n";
+
+		// Make the thread sleep for 1 second to make each vector not use the same random numbers
+		this_thread::sleep_for(chrono::milliseconds(1000));
+	}
 	return 0;
 }
 
