@@ -5,6 +5,10 @@
 #include "integer.h"
 using namespace std;
 
+vector<Integer> create_sorted(int n);
+vector<Integer> create_reverse_sorted(int n);
+vector<Integer> create_random(int n);
+
 template <class T>
 int partition(vector<T> & vec, int p, int r) {
  	T pivot = vec[r];
@@ -71,4 +75,28 @@ int main() {
 	cout << '\n';
 
 	return 0;
+}
+
+
+vector<Integer> create_sorted(int n) {
+	vector<Integer> v;
+	for(int i = 1; i <= n; i++) {
+		v.push_back((Integer)i);
+	}
+	return v;
+}
+vector<Integer> create_reverse_sorted(int n) {	
+	vector<Integer> v;
+	for(int i = n; i >= 1; i--) {
+		v.push_back((Integer)i);
+	}
+	return v;
+}
+
+vector<Integer> create_random(int n) {
+	vector<Integer> v;
+	for (int i = 0; i < n; i++) {
+		v.push_back((Integer)(rand()%1000));
+	}
+	return v;
 }
