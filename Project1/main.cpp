@@ -68,12 +68,24 @@ void insertionsort(vector<T> & vec) {
 }
 
 int main() {
-	vector<Integer>v={(Integer)3,(Integer)12,(Integer)9,(Integer)5,(Integer)20,(Integer)123,(Integer)345,(Integer)13,(Integer)678,(Integer)134,(Integer)869,(Integer)1,(Integer)34,(Integer)78,(Integer)666,(Integer)420,(Integer)69};
+	vector<Integer> v = create_sorted(100);
 	rand_quicksort(v, 0, v.size()-1);
 	for(Integer i : v)
 		cout << i.get_value() << ' ';
-	cout << '\n';
+	cout << "\n\n";
 
+	
+	v = create_reverse_sorted(100);
+	rand_quicksort(v, 0, v.size()-1);
+	for(Integer i : v)
+		cout << i.get_value() << ' ';
+	cout << "\n\n";
+
+	v = create_random(100);
+	rand_quicksort(v, 0, v.size()-1);
+	for(Integer i : v)
+		cout << i.get_value() << ' ';
+	cout << "\n\n";
 	return 0;
 }
 
