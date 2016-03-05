@@ -2,6 +2,7 @@
 #include <time.h>
 #include <iostream>
 #include <vector>
+#include "integer.h"
 using namespace std;
 
 template <class T>
@@ -24,12 +25,10 @@ int rand_partition(vector<T> & vec, int p, int r) {
 	srand(time(NULL));
 	
 	int num = p + rand() % (r-p);
-	cout << "Num: " << vec[num] << '\n';
 	T tmp = vec[r];
 	vec[r] = vec[num];
 	vec[num] = tmp;
 
-	cout << "Vec[-1]: " << vec[r] << '\n';
 	return partition(vec, p, r);
 }
 
@@ -65,10 +64,10 @@ void insertionsort(vector<T> & vec) {
 }
 
 int main() {
-	vector<int> v = {3,12,9,5,20, 123,345, 13 ,678 ,134, 869, 1, 34 ,78, 666, 420, 69};
+	vector<Integer>v={(Integer)3,(Integer)12,(Integer)9,(Integer)5,(Integer)20,(Integer)123,(Integer)345,(Integer)13,(Integer)678,(Integer)134,(Integer)869,(Integer)1,(Integer)34,(Integer)78,(Integer)666,(Integer)420,(Integer)69};
 	rand_quicksort(v, 0, v.size()-1);
-	for(int i : v)
-		cout << i << ' ';
+	for(Integer i : v)
+		cout << i.get_value() << ' ';
 	cout << '\n';
 
 	return 0;
