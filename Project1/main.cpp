@@ -9,7 +9,7 @@ int partition(vector<T> & vec, int p, int r) {
  	T pivot = vec[r];
 	int i = p-1;
 	for (int j = p; j <= r; j++) {
-		if (vec[j] < pivot) {
+		if (vec[j] <= pivot) {
 			i++;
 			T temp = vec[i];
 			vec[i] = vec[j];
@@ -23,10 +23,13 @@ template <class T>
 int rand_partition(vector<T> & vec, int p, int r) {
 	srand(time(NULL));
 	
-	int num = rand() % (r-p);
+	int num = p + rand() % (r-p);
+	cout << "Num: " << vec[num] << '\n';
 	T tmp = vec[r];
 	vec[r] = vec[num];
 	vec[num] = tmp;
+
+	cout << "Vec[-1]: " << vec[r] << '\n';
 	return partition(vec, p, r);
 }
 
@@ -63,13 +66,10 @@ void insertionsort(vector<T> & vec) {
 
 int main() {
 	vector<int> v = {3,12,9,5,20, 123,345, 13 ,678 ,134, 869, 1, 34 ,78, 666, 420, 69};
-	quicksort(v, 0, v.size()-1);
+	rand_quicksort(v, 0, v.size()-1);
 	for(int i : v)
-		cout << i << '\n';
+		cout << i << ' ';
+	cout << '\n';
 
-	vector<int> v2 = {3,12,9,5,20, 123,345, 13 ,678 ,134, 869, 1, 34 ,78, 666, 420, 69};
-	insertionsort(v2);
-	for(int i : v2)
-		cout << i << '\n';
 	return 0;
 }
