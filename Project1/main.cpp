@@ -7,9 +7,9 @@
 #include "integer.h"
 using namespace std;
 
-vector<Integer> create_sorted(int n);
-vector<Integer> create_reverse_sorted(int n);
-vector<Integer> create_random(int n);
+void create_sorted(vector<Integer> & v, int n);
+void create_reverse_sorted(vector<Integer> & v, int n);
+void create_random(vector<Integer> & v, int n);
 
 template <class T>
 int partition(vector<T> & vec, int p, int r) {
@@ -29,7 +29,7 @@ int partition(vector<T> & vec, int p, int r) {
 template <class T>
 int rand_partition(vector<T> & vec, int p, int r) {
 	srand(time(NULL));
-	
+
 	int num = p + rand() % (r-p);
 	T tmp = vec[r];
 	vec[r] = vec[num];
@@ -70,29 +70,31 @@ void insertionsort(vector<T> & vec) {
 }
 
 int main() {
-	vector<Integer> v = create_sorted(100);
-	rand_quicksort(v, 0, v.size()-1);
+	vector<Integer> v;
+	create_sorted(v, 100);
+	insertionsort(v, 0, v.size()-1);
 	for(Integer i : v)
 		cout << i.get_value() << ' ';
 	cout << "\n\n";
+	v.clear();
 
-	
-	v = create_reverse_sorted(100);
-	rand_quicksort(v, 0, v.size()-1);
+	create_reverse_sorted(v, 100);
+	insertionsort(v, 0, v.size()-1);
 	for(Integer i : v)
 		cout << i.get_value() << ' ';
 	cout << "\n\n";
+	v.clear();
 
 	srand(time(NULL));
-	
+
 	int num_rand = 4;
 	for (int i = 0; i < num_rand; i++) {
-		v = create_random(100);
-		rand_quicksort(v, 0, v.size()-1);
+		create_random(v, 100);
+		insertionsort(v, 0, v.size()-1);
 		for(Integer i : v)
 			cout << i.get_value() << ' ';
 		cout << "\n\n";
-
+		v.clear();
 		// Make the thread sleep for 1 second to make each vector not use the same random numbers
 		this_thread::sleep_for(chrono::milliseconds(1000));
 	}
@@ -100,25 +102,19 @@ int main() {
 }
 
 
-vector<Integer> create_sorted(int n) {
-	vector<Integer> v;
+void create_sorted(vector<Integer> & v, int n) {
 	for(int i = 1; i <= n; i++) {
 		v.push_back((Integer)i);
 	}
-	return v;
 }
-vector<Integer> create_reverse_sorted(int n) {	
-	vector<Integer> v;
+void create_reverse_sorted(vector<Integer> & v, int n) {
 	for(int i = n; i >= 1; i--) {
 		v.push_back((Integer)i);
 	}
-	return v;
 }
 
-vector<Integer> create_random(int n) {
-	vector<Integer> v;
+void create_random(vector<Integer> & v, int n) {
 	for (int i = 0; i < n; i++) {
 		v.push_back((Integer)(rand()%1000));
 	}
-	return v;
 }
