@@ -11,6 +11,8 @@ void create_sorted(vector<Integer> & v, int n);
 void create_reverse_sorted(vector<Integer> & v, int n);
 void create_random(vector<Integer> & v, int n);
 
+const int SIZE = 100;
+
 template <class T>
 int partition(vector<T> & vec, int p, int r) {
  	T pivot = vec[r];
@@ -57,7 +59,7 @@ void rand_quicksort(vector<T> & vec, int p, int r) {
 }
 
 template <class T>
-void insertionsort(vector<T> & vec) {
+void insertionsort(vector<T> & vec, int p, int r) {
 	for(int i = 1; i < vec.size() -1; i++) {
 		T tmp = vec[i];
 		int j = i-1;
@@ -69,119 +71,56 @@ void insertionsort(vector<T> & vec) {
 	}
 }
 
+int count_comparison(const vector<Integer> vec) {
+	int sum = 0;
+	for(Integer i : vec) sum += i.get_value();
+	return sum;
+}
+
 void print_vector(const  vector<Integer> vec) {
 	for(Integer i : vec)
 		cout << i.get_value() << ' ';
 }
 
-void run_insertionsort() {
+template <void (*f)(vector<Integer> &, int, int)>
+void runSort(const string & sort) {
 	vector<Integer> v;
 
-	cout << "\nInsertionsort\n\n";
-	cout << "Sorted\n";
-	create_sorted(v, 100);
-	insertionsort(v);
-	print_vector(v);
-	cout << "\n\n";
+	cout << "\n" << sort << "\n\n";
+	cout << "Sorted:\t";
+	create_sorted(v, SIZE);
+	f(v, 0, v.size()-1);
+	// print_vector(v);
+	cout << "Comp: " << count_comparison(v) << '\n';
 	v.clear();
 
-	cout << "Reverse Sorted\n";
-	create_reverse_sorted(v, 100);
-	insertionsort(v);
-	print_vector(v);
-	cout << "\n\n";
+	cout << "Reverse Sorted:\t";
+	create_reverse_sorted(v, SIZE);
+	f(v, 0, v.size()-1);
+	// print_vector(v);
+	cout << "Comp: " << count_comparison(v) << '\n';
 	v.clear();
 
 	srand(time(NULL));
 
 	int num_rand = 4;
+	int avg = 0;
 	for (int i = 0; i < num_rand; i++) {
-		cout << "Random\n";
-		create_random(v, 100);
-		insertionsort(v);
-		print_vector(v);
-		cout << "\n\n";
+		create_random(v, SIZE);
+		f(v, 0, v.size()-1);
+		// print_vector(v);
+		avg += count_comparison(v);
 		v.clear();
 		// Make the thread sleep for 1 second to make each vector not use the same random numbers
 		this_thread::sleep_for(chrono::milliseconds(1000));
 	}
-}
-
-void run_quicksort() {
-	vector<Integer> v;
-
-	cout << "\nQuicksort\n\n";
-	cout << "Sorted\n";
-	create_sorted(v, 100);
-	quicksort(v, 0, v.size()-1);
-	print_vector(v);
-	cout << "\n\n";
-	v.clear();
-	cout << "CLEARED\n";
-	print_vector(v);
-
-	cout << "Reverse Sorted\n";
-	print_vector(v);
-	cout << "SORT TIME\n";
-	create_reverse_sorted(v, 100);
-	quicksort(v, 0, v.size()-1);
-	print_vector(v);
-	cout << "\n\n";
-	v.clear();
-
-	srand(time(NULL));
-
-	int num_rand = 4;
-	for (int i = 0; i < num_rand; i++) {
-		cout << "Random\n";
-		create_random(v, 100);
-		quicksort(v, 0, v.size()-1);
-		print_vector(v);
-		cout << "\n\n";
-		v.clear();
-		// Make the thread sleep for 1 second to make each vector not use the same random numbers
-		this_thread::sleep_for(chrono::milliseconds(1000));
-	}
-}
-
-void run_rand_quicksort() {
-	vector<Integer> v;
-
-	cout << "\nRandom Quicksort\n\n";
-	cout << "Sorted\n";
-	create_sorted(v, 100);
-	rand_quicksort(v, 0, v.size()-1);
-	print_vector(v);
-	cout << "\n\n";
-	v.clear();
-
-	cout << "Reverse Sorted\n";
-	create_reverse_sorted(v, 100);
-	rand_quicksort(v, 0, v.size()-1);
-	print_vector(v);
-	cout << "\n\n";
-	v.clear();
-
-	srand(time(NULL));
-
-	int num_rand = 4;
-	for (int i = 0; i < num_rand; i++) {
-		cout << "Random\n";
-		create_random(v, 100);
-		rand_quicksort(v, 0, v.size()-1);
-		print_vector(v);
-		cout << "\n\n";
-		v.clear();
-		// Make the thread sleep for 1 second to make each vector not use the same random numbers
-		this_thread::sleep_for(chrono::milliseconds(1000));
-	}
+	cout << "Random:\tComp: " << avg / float(num_rand) << '\n';
 }
 
 int main() {
-	run_insertionsort();
-	run_quicksort();
-	run_rand_quicksort();
-
+	runSort<insertionsort>("Insertionsort");
+	runSort<quicksort>("Quicksort");
+	runSort<rand_quicksort>("RandQuicksort");
 	return 0;
 }
 
