@@ -82,20 +82,20 @@ void print_vector(const  vector<Integer> vec) {
 		cout << i.get_value() << ' ';
 }
 
-template <void (*f)(vector<Integer> &, int, int)>
-void runSort(const string & sort) {
+template <void (*func)(vector<Integer> &, int, int)>
+void runSort(const string & name) {
 	vector<Integer> v;
 
-	cout << "\n" << sort << "\n\n";
+	cout << "\n" << name << "\n\n";
 	cout << "Sorted:\t";
 	create_sorted(v, SIZE);
-	f(v, 0, v.size()-1);
+	func(v, 0, v.size()-1);
 	cout << "Comp: " << count_comparison(v) << '\n';
 	v.clear();
 
 	cout << "Reverse Sorted:\t";
 	create_reverse_sorted(v, SIZE);
-	f(v, 0, v.size()-1);
+	func(v, 0, v.size()-1);
 	cout << "Comp: " << count_comparison(v) << '\n';
 	v.clear();
 
@@ -105,7 +105,7 @@ void runSort(const string & sort) {
 	int avg = 0;
 	for (int i = 0; i < num_rand; i++) {
 		create_random(v, SIZE);
-		f(v, 0, v.size()-1);
+		func(v, 0, v.size()-1);
 		avg += count_comparison(v);
 		v.clear();
 		// Make the thread sleep for 1 second to make each vector not use the same random numbers

@@ -1,3 +1,6 @@
+#ifndef INTEGER_H
+#define INTEGER_H
+
 class Integer {
 	public:
 		Integer(): _value(0), _count(0) {};
@@ -16,3 +19,5 @@ class Integer {
 		int _value;
 		int _count;
 };
+
+#endif
