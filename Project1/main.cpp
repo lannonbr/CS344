@@ -90,25 +90,22 @@ void runSort(const string & sort) {
 	cout << "Sorted:\t";
 	create_sorted(v, SIZE);
 	f(v, 0, v.size()-1);
-	// print_vector(v);
 	cout << "Comp: " << count_comparison(v) << '\n';
 	v.clear();
 
 	cout << "Reverse Sorted:\t";
 	create_reverse_sorted(v, SIZE);
 	f(v, 0, v.size()-1);
-	// print_vector(v);
 	cout << "Comp: " << count_comparison(v) << '\n';
 	v.clear();
 
 	srand(time(NULL));
 
-	int num_rand = 4;
+	int num_rand = 10;
 	int avg = 0;
 	for (int i = 0; i < num_rand; i++) {
 		create_random(v, SIZE);
 		f(v, 0, v.size()-1);
-		// print_vector(v);
 		avg += count_comparison(v);
 		v.clear();
 		// Make the thread sleep for 1 second to make each vector not use the same random numbers
