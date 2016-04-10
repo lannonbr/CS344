@@ -8,6 +8,7 @@ template <class K, class V>
 class Map {
   public:
     Map <K,V>(): root(nullptr) {};
+    ~Map<K,V>() { delete root; }
     void insert(K key, V value);
     // void erase(K key);
     // int size();
@@ -40,6 +41,7 @@ void Map<K,V>::insert(K key, V value) {
     else
       y->setRight(z);
     z->setParent(y);
+    delete x;
   }
 }
 
@@ -48,7 +50,9 @@ V Map<K,V>::operator[](K key) {
   MapNode<K,V> * node = root;
   node = find(node, key);
   if(node == nullptr) {
-    std::cerr << "ERROR: Not a valid key: " << key << '\n';
+    std::cerr << "ERROR: Not a valid key: " << key << "\nExiting\n";
+    delete node;
+    delete root;
     exit(1);
   }
   return node->getValue();

@@ -25,4 +25,10 @@ private:
   V value;
 };
 
+template <class K, class V>
+MapNode<K,V>::~MapNode() {
+  delete left;
+  delete right;
+}
+
 #endif
