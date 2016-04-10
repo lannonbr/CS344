@@ -2,6 +2,7 @@
 #define MAP_H
 
 #include "MapNode.h"
+#include <iostream>
 
 template <class K, class V>
 class Map {
@@ -11,11 +12,12 @@ class Map {
     // void erase(K key);
     // int size();
     // bool empty();
-    // V operator[](K key);
+    V operator[](K key);
     MapNode<K,V> * min();
     MapNode<K,V> * max();
   private:
     MapNode<K,V> * root;
+    MapNode<K,V> * find(MapNode<K,V> * node, K key);
 };
 
 template <class K, class V>
@@ -42,6 +44,17 @@ void Map<K,V>::insert(K key, V value) {
 }
 
 template <class K, class V>
+V Map<K,V>::operator[](K key) {
+  MapNode<K,V> * node = root;
+  node = find(node, key);
+  if(node == nullptr) {
+    std::cerr << "ERROR: Not a valid key: " << key << '\n';
+    exit(1);
+  }
+  return node->getValue();
+}
+
+template <class K, class V>
 MapNode<K,V> * Map<K,V>::min() {
   MapNode<K,V> * x = root;
   while(x->getLeft() != nullptr)
@@ -55,6 +68,20 @@ MapNode<K,V> * Map<K,V>::max() {
   while(x->getRight() != nullptr)
     x = x->getRight();
   return x;
+}
+
+template <class K, class V>
+MapNode<K,V> * Map<K,V>::find(MapNode<K,V> * node, K key) {
+  while(node != nullptr) {
+    if(node->getKey() == key) {
+      return node;
+    } else if(node->getKey() < key) {
+      node = node->getRight();
+    } else if(node->getKey() > key) {
+      node = node->getLeft();
+    }
+  }
+  return nullptr;
 }
 
 #endif

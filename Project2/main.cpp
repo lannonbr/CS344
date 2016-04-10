@@ -8,5 +8,6 @@ int main(int argc, char ** argv) {
   newMap.insert(2, "Foobar");
   cout << newMap.min()->getValue() << '\n';
   cout << newMap.max()->getValue() << '\n';
+  cout << newMap[4];
   return 0;
 }
