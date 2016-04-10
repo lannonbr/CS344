@@ -11,7 +11,7 @@ class Map {
     void insert(K key, V value);
     // void erase(K key);
     // int size();
-    // bool empty();
+    bool empty() { return root == nullptr; }
     V operator[](K key);
     MapNode<K,V> * min();
     MapNode<K,V> * max();
