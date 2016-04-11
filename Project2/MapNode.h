@@ -20,7 +20,7 @@ public:
   void setParent(MapNode * z) { parent = z; }
 private:
   MapNode<K,V> * parent, * left, * right;
-
+  
   K key;
   V value;
 };

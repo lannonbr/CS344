@@ -10,15 +10,16 @@ class Map {
     Map <K,V>(): root(nullptr), size_(0) {};
     ~Map<K,V>() { delete root; }
     void insert(K key, V value);
-    // void erase(K key);
+    void erase(K key);
     int size() { return size_; };
     bool empty() { return root == nullptr; }
     V operator[](K key);
-    MapNode<K,V> * min();
-    MapNode<K,V> * max();
+    MapNode<K,V> * min(MapNode<K, V> * z);
+    MapNode<K,V> * max(MapNode<K, V> * z);
   private:
     MapNode<K,V> * root;
     MapNode<K,V> * find(MapNode<K,V> * node, K key);
+    void transplant(MapNode<K, V> * u, MapNode<K, V> * v);
     int size_;
 };
 
@@ -48,6 +49,47 @@ void Map<K,V>::insert(K key, V value) {
 }
 
 template <class K, class V>
+void Map<K,V>::erase(K key) {
+  MapNode<K, V> * z = find(root, key);
+  if (z == nullptr) {
+    cout << "Element not found.\n";
+    return;
+  }
+
+  if (z->getLeft() == nullptr) {
+    transplant(z, z->getRight());
+  } else if (z->getRight() == nullptr) {
+    transplant(z, z->getLeft());
+  } else {
+    MapNode<K, V> * y = min(z->getRight());
+    if (y != z->getRight()) {
+      transplant(y, y->getRight());
+      y->setRight(z->getRight());
+      z->getRight()->setParent(y);
+    }
+    transplant(z, y);
+    y->setLeft(z->getLeft());
+    y->getLeft()->setParent(y);
+  }
+}
+
+template <class K, class V>
+void Map<K, V>::transplant(MapNode<K, V> * u, MapNode<K, V> * v) {
+  if (root == u) {
+    root = v;
+    v->setParent(nullptr);
+  } else {
+    MapNode<K, V> * q = u->getParent();
+    if (q->getLeft() == u) {
+      q.setLeft(v);
+    } else {
+      q->setRight(v);
+    }
+    v->setParent(q);
+  }
+}
+
+template <class K, class V>
 V Map<K,V>::operator[](K key) {
   MapNode<K,V> * node = root;
   node = find(node, key);
@@ -61,16 +103,16 @@ V Map<K,V>::operator[](K key) {
 }
 
 template <class K, class V>
-MapNode<K,V> * Map<K,V>::min() {
-  MapNode<K,V> * x = root;
+MapNode<K,V> * Map<K,V>::min(MapNode<K, V> * z) {
+  MapNode<K, V> * x = z;
   while(x->getLeft() != nullptr)
     x = x->getLeft();
   return x;
 }
 
 template <class K, class V>
-MapNode<K,V> * Map<K,V>::max() {
-  MapNode<K,V> * x = root;
+MapNode<K,V> * Map<K,V>::max(MapNode<K, V> * z) {
+  MapNode<K, V> * x = z;
   while(x->getRight() != nullptr)
     x = x->getRight();
   return x;
