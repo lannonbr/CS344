@@ -13,6 +13,7 @@ class Map {
     void erase(K key);
     int size() { return size_; };
     bool empty() { return root == nullptr; }
+    void clear() { delete root; }
     V operator[](K key);
     MapNode<K,V> * min(MapNode<K, V> * z);
     MapNode<K,V> * max(MapNode<K, V> * z);
