@@ -72,6 +72,7 @@ void Map<K,V>::erase(K key) {
     y->setLeft(z->getLeft());
     y->getLeft()->setParent(y);
   }
+  delete z;
 }
 
 template <class K, class V>
