@@ -7,11 +7,11 @@
 template <class K, class V>
 class Map {
   public:
-    Map <K,V>(): root(nullptr) {};
+    Map <K,V>(): root(nullptr), size_(0) {};
     ~Map<K,V>() { delete root; }
     void insert(K key, V value);
     // void erase(K key);
-    // int size();
+    int size() { return size_; };
     bool empty() { return root == nullptr; }
     V operator[](K key);
     MapNode<K,V> * min();
@@ -19,6 +19,7 @@ class Map {
   private:
     MapNode<K,V> * root;
     MapNode<K,V> * find(MapNode<K,V> * node, K key);
+    int size_;
 };
 
 template <class K, class V>
@@ -41,6 +42,7 @@ void Map<K,V>::insert(K key, V value) {
     else
       y->setRight(z);
     z->setParent(y);
+    size += 1;
     delete x;
   }
 }
