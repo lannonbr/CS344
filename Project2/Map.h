@@ -141,8 +141,8 @@ MapNode<K,V> * Map<K,V>::find(MapNode<K,V> * node, K key) {
 
 template <class K, class V>
 void Map<K,V>::swap(K k1, K k2) {
-  V temp = *(find(root, k1));
-  find(root, k1)->setValue(*(find(root, k2)));
+  V temp = (find(root, k1))->getValue();
+  find(root, k1)->setValue((find(root, k2))->getValue());
   find(root, k2)->setValue(temp);
 }
 
