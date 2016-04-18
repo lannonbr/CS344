@@ -15,6 +15,7 @@ class Map {
     bool empty() { return root == nullptr; }
     void clear() { delete root; }
     V operator[](K key);
+    MapNode<K,V> * top() { return root; }
     MapNode<K,V> * min(MapNode<K, V> * z);
     MapNode<K,V> * max(MapNode<K, V> * z);
   private:
@@ -44,7 +45,7 @@ void Map<K,V>::insert(K key, V value) {
     else
       y->setRight(z);
     z->setParent(y);
-    size += 1;
+    size_ += 1;
     delete x;
   }
 }
@@ -53,7 +54,7 @@ template <class K, class V>
 void Map<K,V>::erase(K key) {
   MapNode<K, V> * z = find(root, key);
   if (z == nullptr) {
-    cout << "Element not found.\n";
+    std::cout << "Element not found.\n";
     return;
   }
 
@@ -72,6 +73,9 @@ void Map<K,V>::erase(K key) {
     y->setLeft(z->getLeft());
     y->getLeft()->setParent(y);
   }
+  z->setParent(nullptr);
+  z->setLeft(nullptr);
+  z->setRight(nullptr);
   delete z;
 }
 
@@ -83,7 +87,7 @@ void Map<K, V>::transplant(MapNode<K, V> * u, MapNode<K, V> * v) {
   } else {
     MapNode<K, V> * q = u->getParent();
     if (q->getLeft() == u) {
-      q.setLeft(v);
+      q->setLeft(v);
     } else {
       q->setRight(v);
     }
