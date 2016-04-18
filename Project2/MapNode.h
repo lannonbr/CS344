@@ -29,8 +29,8 @@ private:
 
 template <class K, class V>
 MapNode<K,V>::~MapNode() {
-  delete left;
-  delete right;
+  delete left; // Recursively get rid of any node to the left
+  delete right; // Recursively get rid of any node to the right
 }
 
 #endif

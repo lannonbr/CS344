@@ -26,6 +26,9 @@ class Map {
     int size_;
 };
 
+/*
+* insert(key, value) insert a node with specified key and value into the map
+*/
 template <class K, class V>
 void Map<K,V>::insert(K key, V value) {
   MapNode<K,V> * z = new MapNode<K,V>(key, value);
@@ -51,6 +54,9 @@ void Map<K,V>::insert(K key, V value) {
   }
 }
 
+/*
+* erase(key): delete the node at map[key]
+*/
 template <class K, class V>
 void Map<K,V>::erase(K key) {
   MapNode<K, V> * z = find(root, key);
@@ -80,6 +86,9 @@ void Map<K,V>::erase(K key) {
   delete z;
 }
 
+/*
+* transplant(u, v) put node v in the place of node u
+*/
 template <class K, class V>
 void Map<K, V>::transplant(MapNode<K, V> * u, MapNode<K, V> * v) {
   if (root == u) {
@@ -96,6 +105,9 @@ void Map<K, V>::transplant(MapNode<K, V> * u, MapNode<K, V> * v) {
   }
 }
 
+/*
+* operator[](key) access the content of the map at key (map[key])
+*/
 template <class K, class V>
 V Map<K,V>::operator[](K key) {
   MapNode<K,V> * node = root;
@@ -125,6 +137,9 @@ MapNode<K,V> * Map<K,V>::max(MapNode<K, V> * z) {
   return x;
 }
 
+/*
+* find(node, key): find a node starting at node with a key of key
+*/
 template <class K, class V>
 MapNode<K,V> * Map<K,V>::find(MapNode<K,V> * node, K key) {
   while(node != nullptr) {
@@ -139,6 +154,9 @@ MapNode<K,V> * Map<K,V>::find(MapNode<K,V> * node, K key) {
   return nullptr;
 }
 
+/*
+* swap(k1, k2) swap the values between keys k1 and k2
+*/
 template <class K, class V>
 void Map<K,V>::swap(K k1, K k2) {
   V temp = (find(root, k1))->getValue();
