@@ -20,6 +20,9 @@ int main() {
   cout << newMap.min(newMap.top())->getValue() << '\n';
   cout << newMap.max(newMap.top())->getValue() << '\n';
 
+  // Testing swap function
+  newMap.swap(3, 1);
+
   // Testing [] operator
   cout << newMap[3] << '\n';
   // cout << newMap[4] << '\n'; // Note: This will safely close the program for an invalid index

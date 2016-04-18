@@ -15,12 +15,14 @@ public:
   K getKey() { return key; }
   V getValue() { return value; }
 
+  void setValue(V newValue) { value = newValue; }
+
   void setLeft(MapNode * z) { left = z; }
   void setRight(MapNode * z) { right = z; }
   void setParent(MapNode * z) { parent = z; }
 private:
   MapNode<K,V> * parent, * left, * right;
-  
+
   K key;
   V value;
 };

@@ -18,9 +18,10 @@ class Map {
     MapNode<K,V> * top() { return root; }
     MapNode<K,V> * min(MapNode<K, V> * z);
     MapNode<K,V> * max(MapNode<K, V> * z);
+    MapNode<K,V> * find(MapNode<K,V> * node, K key);
+    void swap(K k1, K k2);
   private:
     MapNode<K,V> * root;
-    MapNode<K,V> * find(MapNode<K,V> * node, K key);
     void transplant(MapNode<K, V> * u, MapNode<K, V> * v);
     int size_;
 };
@@ -136,6 +137,13 @@ MapNode<K,V> * Map<K,V>::find(MapNode<K,V> * node, K key) {
     }
   }
   return nullptr;
+}
+
+template <class K, class V>
+void Map<K,V>::swap(K k1, K k2) {
+  V temp = *(find(root, k1));
+  find(root, k1)->setValue(*(find(root, k2)));
+  find(root, k2)->setValue(temp);
 }
 
 #endif
