@@ -2,7 +2,6 @@
 
 - copy constructor
 - assignment operator
-- rename min & max to begin & end
 - count method
 - erase(iterator)
 - map iterator

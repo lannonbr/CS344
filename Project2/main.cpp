@@ -16,9 +16,9 @@ int main() {
   newMap.insert(2, "Foobar");
   newMap.insert(1, "Cats");
 
-  // Testing min and max functions
-  cout << newMap.min(newMap.top())->getValue() << '\n';
-  cout << newMap.max(newMap.top())->getValue() << '\n';
+  // Testing begin and end functions
+  cout << newMap.begin(newMap.top())->getValue() << '\n';
+  cout << newMap.end(newMap.top())->getValue() << '\n';
 
   // Testing swap function
   newMap.swap(3, 1);

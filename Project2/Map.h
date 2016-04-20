@@ -16,8 +16,8 @@ class Map {
     void clear() { delete root; }
     V operator[](K key);
     MapNode<K,V> * top() { return root; }
-    MapNode<K,V> * min(MapNode<K, V> * z);
-    MapNode<K,V> * max(MapNode<K, V> * z);
+    MapNode<K,V> * begin(MapNode<K, V> * z);
+    MapNode<K,V> * end(MapNode<K, V> * z);
     MapNode<K,V> * find(MapNode<K,V> * node, K key);
     void swap(K k1, K k2);
   private:
@@ -70,7 +70,7 @@ void Map<K,V>::erase(K key) {
   } else if (z->getRight() == nullptr) {
     transplant(z, z->getLeft());
   } else {
-    MapNode<K, V> * y = min(z->getRight());
+    MapNode<K, V> * y = begin(z->getRight());
     if (y != z->getRight()) {
       transplant(y, y->getRight());
       y->setRight(z->getRight());
@@ -122,7 +122,7 @@ V Map<K,V>::operator[](K key) {
 }
 
 template <class K, class V>
-MapNode<K,V> * Map<K,V>::min(MapNode<K, V> * z) {
+MapNode<K,V> * Map<K,V>::begin(MapNode<K, V> * z) {
   MapNode<K, V> * x = z;
   while(x->getLeft() != nullptr)
     x = x->getLeft();
@@ -130,7 +130,7 @@ MapNode<K,V> * Map<K,V>::min(MapNode<K, V> * z) {
 }
 
 template <class K, class V>
-MapNode<K,V> * Map<K,V>::max(MapNode<K, V> * z) {
+MapNode<K,V> * Map<K,V>::end(MapNode<K, V> * z) {
   MapNode<K, V> * x = z;
   while(x->getRight() != nullptr)
     x = x->getRight();
