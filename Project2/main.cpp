@@ -32,5 +32,7 @@ int main() {
 
   cout << newMap[1] << '\n';
 
+  // Map<int, string> map2(newMap);
+
   return 0;
 }

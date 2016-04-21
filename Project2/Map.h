@@ -15,6 +15,7 @@ class Map {
     bool empty() { return root == nullptr; }
     void clear() { delete root; }
     V operator[](K key);
+    // int count(K key);
     MapNode<K,V> * top() { return root; }
     MapNode<K,V> * begin(MapNode<K, V> * z);
     MapNode<K,V> * end(MapNode<K, V> * z);
@@ -25,6 +26,16 @@ class Map {
     void transplant(MapNode<K, V> * u, MapNode<K, V> * v);
     int size_;
 };
+
+// template <class K, class V>
+// class MapIterator {
+// public:
+//   MapIterator(): current_node(nullptr) {};
+//   V & operator *() { return current_node->getValue(); }
+//   bool operator==(const MapIterator & rhs) { current_node == rhs.current_node}
+// private:
+//   MapNode<K,V> * current_node;
+// };
 
 /*
 * insert(key, value) insert a node with specified key and value into the map
@@ -120,6 +131,20 @@ V Map<K,V>::operator[](K key) {
   }
   return node->getValue();
 }
+
+/*
+* count(key) count the number of elements with a key of key
+*/
+// template <class K, class V>
+// int Map<K,V>::count(K key) {
+//   int total = 0;
+//   for(auto itr = begin(); itr != end(); itr++) {
+//     if((*itr).getKey() == key) {
+//       total++;
+//     }
+//   }
+//   return total;
+// }
 
 template <class K, class V>
 MapNode<K,V> * Map<K,V>::begin(MapNode<K, V> * z) {
