@@ -16,9 +16,9 @@ int main() {
   newMap.insert(2, "Foobar");
   newMap.insert(1, "Cats");
 
-  // Testing begin and end functions
-  cout << newMap.begin(newMap.top())->getValue() << '\n';
-  cout << newMap.end(newMap.top())->getValue() << '\n';
+  //// Testing begin and end functions
+  //cout << newMap.begin(newMap.top())->getValue() << '\n';
+  //cout << newMap.end(newMap.top())->getValue() << '\n';
 
   // Testing swap function
   newMap.swap(3, 1);
@@ -41,6 +41,13 @@ int main() {
 
   cout << "Size of map1: " << newMap.size() << '\n';
   cout << "Size of map2: " << map2.size() << '\n';
+
+  newMap.insert(402, "cats 4");
+  newMap.insert(3002, "i am a cow");
+
+  for (auto itr = newMap.begin(); itr != newMap.end(); ++itr) {
+    cout << itr->second << '\n';
+  }
 
   return 0;
 }

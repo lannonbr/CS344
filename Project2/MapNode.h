@@ -30,7 +30,7 @@ public:
   MapNode * getRight() { return right; }
   MapNode * getParent() { return parent; }
 
-  // MapNode * next();
+  MapNode * next();
 
   K getKey() { return element.first; }
   V getValue() { return element.second; }
@@ -41,14 +41,11 @@ public:
   void setLeft(MapNode * z) { left = z; }
   void setRight(MapNode * z) { right = z; }
   void setParent(MapNode * z) { parent = z; }
-
-  // MapNode * min(MapNode * z);
+  MapNode<K, V> * min(MapNode<K, V> * z);
+  MapNode<K, V> * min();
+  std::pair<K,V> element;
 private:
   MapNode<K,V> * parent, * left, * right;
-  std::pair<K,V> element;
-
-  // K key;
-  // V value;
 };
 
 // template <class K, class V>
@@ -60,28 +57,32 @@ MapNode<K,V>::~MapNode() {
   delete right; // Recursively get rid of any node to the right
 }
 
-// template <class K, class V>
-// MapNode<K,V> * MapNode<K,V>::next() {
-//   if(getRight() != nullptr) {
-//     return min(getRight());
-//   } else {
-//     MapNode<K,V> * y = getParent();
-//     MapNode<K,V> * x = this;
-//     while(y != nullptr && y.getRight() == x) {
-//       x = y;
-//       y = y.getParent();
-//     }
-//     return y;
-//   }
-// }
-//
-// template <class K, class V>
-// MapNode<K,V> * MapNode<K,V>::min(MapNode<K, V> * z) {
-//   MapNode<K, V> * x = z;
-//   while(x->getLeft() != nullptr)
-//     x = x->getLeft();
-//   return x;
-// }
+template <class K, class V>
+MapNode<K,V> * MapNode<K,V>::next() {
+  if(getRight() != nullptr) {
+    return min(getRight());
+  } else {
+    MapNode<K,V> * y = getParent();
+    MapNode<K,V> * x = this;
+    while(y != nullptr && y->getRight() == x) {
+      x = y;
+      y = y->getParent();
+    }
+    return y;
+  }
+}
 
+template <class K, class V>
+MapNode<K,V> * MapNode<K,V>::min(MapNode<K, V> * z) {
+  MapNode<K, V> * x = z;
+  while(x->getLeft() != nullptr)
+    x = x->getLeft();
+  return x;
+}
+
+template <class K, class V>
+MapNode<K,V> * MapNode<K,V>::min() {
+  return min(this);
+}
 
 #endif

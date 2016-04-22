@@ -6,15 +6,33 @@
 #include <utility>
 
 template <class K, class V>
+class Map;
+
+template <class K, class V>
+class MapIterator {
+public:
+  friend class Map<K,V>;
+  MapIterator<K, V>(MapNode<K,V> * node): current_node(node) {};
+  std::pair<K,V> & operator *() { return current_node->element; }
+  std::pair<K,V> * operator ->() { return &(current_node->element); }
+  bool operator==(const MapIterator & rhs) { current_node == rhs.current_node; }
+  bool operator!=(const MapIterator & rhs) { current_node != rhs.current_node; }
+  MapIterator operator++() {
+    current_node = current_node->next();
+  }
+private:
+  MapNode<K,V> * current_node;
+};
+
+template <class K, class V>
 class Map {
   public:
     Map <K,V>(): root(nullptr), size_(0) {};
     Map<K,V>(Map<K,V> & oldMap): size_(oldMap.size()) {
-      // size_ = oldMap.size();
       if(oldMap.top() != nullptr)
         root = new MapNode<K,V>(oldMap.top());
     };
-    ~Map<K,V>() { delete root; }
+    ~Map<K,V>() { delete root; };
     Map<K,V> & operator=(Map<K,V> & otherMap) {
 
     }
@@ -24,10 +42,12 @@ class Map {
     bool empty() { return root == nullptr; }
     void clear() { delete root; }
     V operator[](K key);
-    // int count(K key);
+    int count(K key);
     MapNode<K,V> * top() { return root; }
-    MapNode<K,V> * begin(MapNode<K, V> * z);
-    MapNode<K,V> * end(MapNode<K, V> * z);
+    MapIterator<K,V> begin();
+    MapIterator<K,V> begin(MapNode<K, V> * z);
+    MapNode<K,V> * min(MapNode<K, V> * z);
+    MapIterator<K,V> end();
     MapNode<K,V> * find(MapNode<K,V> * node, K key);
     void swap(K k1, K k2);
   private:
@@ -35,24 +55,6 @@ class Map {
     void transplant(MapNode<K, V> * u, MapNode<K, V> * v);
     int size_;
 };
-
-// template <class K, class V>
-// class MapIterator {
-// public:
-//   friend Map<K,V>;
-//   MapIterator(MapNode<K,V> * node): current_node(node) {};
-//   MapNode<K,V> * operator *() { return current_node; }
-//   bool operator==(const MapIterator & rhs) { current_node == rhs.current_node; }
-//   bool operator!=(const MapIterator & rhs) { current_node != rhs.current_node; }
-//   // MapIterator operator++() {
-//   //   current_node =
-//   // }
-// private:
-//   MapNode<K,V> * current_node;
-// };
-
-// template <class K, class V>
-// Map<K,V>::
 
 /*
 * insert(key, value) insert a node with specified key and value into the map
@@ -98,7 +100,7 @@ void Map<K,V>::erase(K key) {
   } else if (z->getRight() == nullptr) {
     transplant(z, z->getLeft());
   } else {
-    MapNode<K, V> * y = begin(z->getRight());
+    MapNode<K, V> * y = min(z->getRight());
     if (y != z->getRight()) {
       transplant(y, y->getRight());
       y->setRight(z->getRight());
@@ -152,19 +154,27 @@ V Map<K,V>::operator[](K key) {
 /*
 * count(key) count the number of elements with a key of key
 */
-// template <class K, class V>
-// int Map<K,V>::count(K key) {
-//   int total = 0;
-//   for(auto itr = begin(); itr != end(); itr++) {
-//     if((*itr).getKey() == key) {
-//       total++;
-//     }
-//   }
-//   return total;
-// }
+template <class K, class V>
+int Map<K,V>::count(K key) {
+  int total = 0;
+  for(auto itr = begin(); itr != end(); itr++) {
+    if(itr->first == key) {
+      total++;
+    }
+  }
+  return total;
+}
 
 template <class K, class V>
-MapNode<K,V> * Map<K,V>::begin(MapNode<K, V> * z) {
+MapIterator<K,V> Map<K,V>::begin(MapNode<K, V> * z) {
+  MapNode<K, V> * x = z;
+  while(x->getLeft() != nullptr)
+    x = x->getLeft();
+  return MapIterator<K, V>(x);
+}
+
+template <class K, class V>
+MapNode<K,V> * Map<K,V>::min(MapNode<K, V> * z) {
   MapNode<K, V> * x = z;
   while(x->getLeft() != nullptr)
     x = x->getLeft();
@@ -172,11 +182,8 @@ MapNode<K,V> * Map<K,V>::begin(MapNode<K, V> * z) {
 }
 
 template <class K, class V>
-MapNode<K,V> * Map<K,V>::end(MapNode<K, V> * z) {
-  MapNode<K,V> * x = z;
-  while(x->getRight() != nullptr)
-    x = x->getRight();
-  return x;
+MapIterator<K,V> Map<K,V>::end() {
+  return NULL;
 }
 
 /*
@@ -204,6 +211,12 @@ void Map<K,V>::swap(K k1, K k2) {
   V temp = (find(root, k1))->getValue();
   find(root, k1)->setValue((find(root, k2))->getValue());
   find(root, k2)->setValue(temp);
+}
+
+template <class K, class V>
+MapIterator<K, V> Map<K,V>::begin() {
+  MapNode<K,V> * firstNode = root->min();
+  return MapIterator<K,V>(firstNode);
 }
 
 #endif
