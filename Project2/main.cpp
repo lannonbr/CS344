@@ -32,7 +32,15 @@ int main() {
 
   cout << newMap[1] << '\n';
 
-  // Map<int, string> map2(newMap);
+  // cout << newMap.find(newMap.top(), 1)->next() << '\n';
+
+  Map<int, string> map2(newMap);
+  cout << map2[1] << '\n';
+
+  map2.insert(40, "Wat");
+
+  cout << "Size of map1: " << newMap.size() << '\n';
+  cout << "Size of map2: " << map2.size() << '\n';
 
   return 0;
 }

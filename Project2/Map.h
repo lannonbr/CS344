@@ -3,12 +3,21 @@
 
 #include "MapNode.h"
 #include <iostream>
+#include <utility>
 
 template <class K, class V>
 class Map {
   public:
     Map <K,V>(): root(nullptr), size_(0) {};
+    Map<K,V>(Map<K,V> & oldMap): size_(oldMap.size()) {
+      // size_ = oldMap.size();
+      if(oldMap.top() != nullptr)
+        root = new MapNode<K,V>(oldMap.top());
+    };
     ~Map<K,V>() { delete root; }
+    Map<K,V> & operator=(Map<K,V> & otherMap) {
+
+    }
     void insert(K key, V value);
     void erase(K key);
     int size() { return size_; };
@@ -30,12 +39,20 @@ class Map {
 // template <class K, class V>
 // class MapIterator {
 // public:
-//   MapIterator(): current_node(nullptr) {};
-//   V & operator *() { return current_node->getValue(); }
-//   bool operator==(const MapIterator & rhs) { current_node == rhs.current_node}
+//   friend Map<K,V>;
+//   MapIterator(MapNode<K,V> * node): current_node(node) {};
+//   MapNode<K,V> * operator *() { return current_node; }
+//   bool operator==(const MapIterator & rhs) { current_node == rhs.current_node; }
+//   bool operator!=(const MapIterator & rhs) { current_node != rhs.current_node; }
+//   // MapIterator operator++() {
+//   //   current_node =
+//   // }
 // private:
 //   MapNode<K,V> * current_node;
 // };
+
+// template <class K, class V>
+// Map<K,V>::
 
 /*
 * insert(key, value) insert a node with specified key and value into the map
@@ -156,7 +173,7 @@ MapNode<K,V> * Map<K,V>::begin(MapNode<K, V> * z) {
 
 template <class K, class V>
 MapNode<K,V> * Map<K,V>::end(MapNode<K, V> * z) {
-  MapNode<K, V> * x = z;
+  MapNode<K,V> * x = z;
   while(x->getRight() != nullptr)
     x = x->getRight();
   return x;
