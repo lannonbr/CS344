@@ -1,5 +1,4 @@
 # Thing remaining to do
 
 - assignment operator
-- count method
 - erase(iterator)
