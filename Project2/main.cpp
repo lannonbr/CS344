@@ -44,10 +44,10 @@ int main() {
 
   newMap.insert(402, "cats 4");
   newMap.insert(3002, "i am a cow");
-
+  cout << "iterator start" << '\n';
   for (auto itr = newMap.begin(); itr != newMap.end(); ++itr) {
     cout << itr->second << '\n';
   }
-
+  cout << "iterator end" << '\n';
   return 0;
 }

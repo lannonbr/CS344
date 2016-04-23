@@ -15,8 +15,9 @@ public:
   MapIterator<K, V>(MapNode<K,V> * node): current_node(node) {};
   std::pair<K,V> & operator *() { return current_node->element; }
   std::pair<K,V> * operator ->() { return &(current_node->element); }
-  bool operator==(const MapIterator & rhs) { current_node == rhs.current_node; }
-  bool operator!=(const MapIterator & rhs) { current_node != rhs.current_node; }
+  bool operator==(const MapIterator<K, V> & rhs) { return current_node == rhs.current_node; }
+  bool operator!=(const MapIterator<K, V> & rhs) { return current_node != rhs.current_node; }
+
   MapIterator operator++() {
     current_node = current_node->next();
   }
@@ -183,7 +184,7 @@ MapNode<K,V> * Map<K,V>::min(MapNode<K, V> * z) {
 
 template <class K, class V>
 MapIterator<K,V> Map<K,V>::end() {
-  return NULL;
+  return MapIterator<K, V>(nullptr);
 }
 
 /*

@@ -1,7 +1,5 @@
 # Thing remaining to do
 
-- copy constructor
 - assignment operator
 - count method
 - erase(iterator)
-- map iterator
