@@ -30,12 +30,13 @@ class Map {
   public:
     Map <K,V>(): root(nullptr), size_(0) {};
     Map<K,V>(Map<K,V> & oldMap): size_(oldMap.size()) {
-      if(oldMap.top() != nullptr)
+      if(oldMap.top() != nullptr) {
         root = new MapNode<K,V>(oldMap.top());
+      }
     };
     ~Map<K,V>() { delete root; };
     Map<K,V> & operator=(Map<K,V> & otherMap) {
-
+      this = new Map<K,V>(otherMap);
     }
     void insert(K key, V value);
     void erase(K key);
