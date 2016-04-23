@@ -39,6 +39,7 @@ class Map {
     }
     void insert(K key, V value);
     void erase(K key);
+    void erase(MapIterator<K, V> itr);
     int size() { return size_; };
     bool empty() { return root == nullptr; }
     void clear() { delete root; }
@@ -115,6 +116,14 @@ void Map<K,V>::erase(K key) {
   z->setLeft(nullptr);
   z->setRight(nullptr);
   delete z;
+}
+/*
+* erase(iterator): delete the node that the iterator is pointing to.
+*/
+
+template <class K, class V>
+void Map<K,V>::erase(MapIterator<K, V> itr) {
+  erase(itr->first);
 }
 
 /*

@@ -55,6 +55,10 @@ int main() {
     cout << itr->second << '\n';
   }
   cout << "iterator end" << "\n\n";
+  
+  cout << "Min node value before itr erase: " << newMap.begin()->second << '\n';
+  newMap.erase(newMap.begin());
+  cout << "Min node value after itr erase: " << newMap.begin()->second << '\n';
 
   cout << "Testing count on key 2: " << newMap.count(2) << '\n';
   cout << "Testing count on key 3002: " << newMap.count(3002) << '\n';
