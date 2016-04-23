@@ -18,10 +18,6 @@ int main() {
   cout << "Inserting (1, \"Cats\")" << '\n';
   newMap.insert(1, "Cats");
 
-  //// Testing begin and end functions
-  //cout << newMap.begin(newMap.top())->getValue() << '\n';
-  //cout << newMap.end(newMap.top())->getValue() << '\n';
-
   // Testing swap function
   cout << "Swapping 3 and 1." << '\n';
   newMap.swap(3, 1);
@@ -31,13 +27,11 @@ int main() {
   cout << newMap[3] << '\n';
   cout << "Value at key 1: ";
   cout << newMap[1] << '\n';
-  // cout << newMap[4] << '\n'; // Note: This will safely close the program for an invalid index
 
   // Erasing a node
   cout << "Erasing 2 from the map." << "\n\n";
   newMap.erase(2);
 
-  // cout << newMap.find(newMap.top(), 1)->next() << '\n';
   cout << "Copying map" << '\n';
   Map<int, string> map2(newMap);
   cout << "Map copied" << "\n\n";
@@ -47,6 +41,11 @@ int main() {
 
   cout << "Size of map1: " << newMap.size() << "\n";
   cout << "Size of map2: " << map2.size() << "\n\n";
+
+  cout << "Assignment Operator\n";
+  Map<int, string> map3 = map2;
+  cout << map2[1] << &map2 << '\n';
+  cout << map3[1] << &map3 <<'\n';
 
   newMap.insert(402, "cats 4");
   newMap.insert(3002, "i am a cow");
@@ -58,5 +57,7 @@ int main() {
 
   cout << "Testing count on key 2: " << newMap.count(2) << '\n';
   cout << "Testing count on key 3002: " << newMap.count(3002) << '\n';
+
+
   return 0;
 }
