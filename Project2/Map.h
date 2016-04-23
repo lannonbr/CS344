@@ -18,7 +18,7 @@ public:
   bool operator==(const MapIterator<K, V> & rhs) { return current_node == rhs.current_node; }
   bool operator!=(const MapIterator<K, V> & rhs) { return current_node != rhs.current_node; }
 
-  MapIterator operator++() {
+  void operator++() {
     current_node = current_node->next();
   }
 private:
@@ -158,7 +158,7 @@ V Map<K,V>::operator[](K key) {
 template <class K, class V>
 int Map<K,V>::count(K key) {
   int total = 0;
-  for(auto itr = begin(); itr != end(); itr++) {
+  for(auto itr = begin(); itr != end(); ++itr) {
     if(itr->first == key) {
       total++;
     }

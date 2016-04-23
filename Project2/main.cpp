@@ -49,5 +49,8 @@ int main() {
     cout << itr->second << '\n';
   }
   cout << "iterator end" << '\n';
+
+  cout << "Testing count on key 2: " << newMap.count(2) << '\n';
+  cout << "Testing count on key 3002: " << newMap.count(3002) << '\n';
   return 0;
 }
